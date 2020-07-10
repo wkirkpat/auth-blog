@@ -15,7 +15,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        let [user]: any = await DB.Users.findOneUserBy("email", email);
+        let [user]: any = await DB.Users.findOneByEmail(email);
         if (user && ComparePassword(password, user.password)) {
           done(null, user);
         } else {

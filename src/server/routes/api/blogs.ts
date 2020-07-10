@@ -4,7 +4,7 @@ import DB from "../../db";
 const router = express.Router();
 
 const isAdmin: express.RequestHandler = (req: any, res, next) => {
-  if(!req.user || req.user.role !== "admin") {
+  if(!req.user) {
       return res.sendStatus(401);
   } else {
       return next();
