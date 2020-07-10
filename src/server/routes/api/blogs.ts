@@ -1,9 +1,17 @@
 import * as express from "express";
-import DB from "./db";
+import DB from "../../db";
 
 const router = express.Router();
 
-router.get("/api/blogs", async (req, res) => {
+const isAdmin: express.RequestHandler = (req: any, res, next) => {
+  if(!req.user || req.user.role !== "admin") {
+      return res.sendStatus(401);
+  } else {
+      return next();
+  }
+}
+
+router.get("/", async (req, res, next) => {
   try {
     let blogs = await DB.Blogs.getBlogs();
     res.json(blogs);
@@ -13,17 +21,17 @@ router.get("/api/blogs", async (req, res) => {
   }
 });
 
-router.get("/api/blogs/:id", async (req, res) => {
+router.get("/:id", isAdmin, async (req, res, next) => {
   try {
     let blog = await DB.Blogs.getBlog(req.params.id);
-    res.json(blog[0]);
+    res.json(blog);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
   }
 });
 
-router.post("/api/blogs", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     res.json(
       await DB.Blogs.newBlog(
@@ -39,7 +47,7 @@ router.post("/api/blogs", async (req, res) => {
   }
 });
 
-router.delete("/api/blogs/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     res.json(await DB.Blogs.deleteBlog(req.params.id));
   } catch (e) {
@@ -48,7 +56,7 @@ router.delete("/api/blogs/:id", async (req, res) => {
   }
 });
 
-router.put("/api/blogs/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     res.json(
       await DB.Blogs.updateBlog(
@@ -59,24 +67,6 @@ router.put("/api/blogs/:id", async (req, res) => {
         req.params.id
       )
     );
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-});
-
-router.get("/api/blogs/:id/tags", async (req, res) => {
-  try {
-    res.json(await DB.Tags.getBlogTags(req.params.id));
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-});
-
-router.get("/api/tags", async (req, res) => {
-  try {
-    res.json(await DB.Tags.getAllTags());
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

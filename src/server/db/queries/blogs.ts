@@ -1,4 +1,4 @@
-import { Connection } from "./index";
+import { Connection } from "../index";
 
 export const getBlogs = async () => {
   return new Promise((resolve, reject) => {
@@ -59,9 +59,9 @@ export const deleteBlog = async (id: string) => {
       if (err) {
         return reject(err);
       }
-      resolve(results.insertId);
+      resolve(results);
     });
-  });
+  });   
 };
 
 //spUpdateBlog works almsot identically to spNewBlog except it updates an existing record
@@ -86,36 +86,10 @@ export const updateBlog = async (
   });
 };
 
-//This pulls back all the tags associated to a specific blog
-export const getBlogTags = async (id: string) => {
-  return new Promise((resolve, reject) => {
-    Connection.query("Call spBlogTags(?)", [id], (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
-};
-
-//This is used to get all the tags to display in the dropdown menu when you select a tag for a blog
-export const getAllTags = async () => {
-  return new Promise((resolve, reject) => {
-    Connection.query("SELECT * from tags", (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
-};
-
 export default {
-  getBlogs,
-  getBlog,
-  newBlog,
-  deleteBlog,
-  updateBlog,
-  getBlogTags,
-  getAllTags,
-};
+    getBlogs,
+    getBlog,
+    newBlog,
+    updateBlog,
+    deleteBlog
+}
