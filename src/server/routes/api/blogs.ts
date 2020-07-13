@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", isAdmin, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     let blog = await DB.Blogs.getBlog(req.params.id);
     res.json(blog);
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
       await DB.Blogs.newBlog(
         req.body.title,
         req.body.content,
-        req.body.author,
+        req.body.authorid,
         req.body.tag
       )
     );
@@ -62,7 +62,7 @@ router.put("/:id", async (req, res) => {
       await DB.Blogs.updateBlog(
         req.body.title,
         req.body.content,
-        req.body.author,
+        req.body.authorid,
         req.body.tag,
         req.params.id
       )

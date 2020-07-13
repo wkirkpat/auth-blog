@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { json, User } from "../../utils/api";
 
 const Edit: React.FC<IEditProps> = (props) => {
   const [blog, setBlog] = useState<Blog>({
@@ -18,8 +19,7 @@ const Edit: React.FC<IEditProps> = (props) => {
 
   const getTags = async () => {
     try {
-      let r = await fetch("/api/tags");
-      let tags = await r.json();
+      let tags = await json("/api/tags");
       setTags(tags);
     } catch (e) {
       console.log(e);
@@ -28,39 +28,39 @@ const Edit: React.FC<IEditProps> = (props) => {
 
   const getBlog = async () => {
     try {
-      let r = await fetch(`/api/blogs/${props.match.params.id}`);
-      let blog = await r.json();
-      console.log(blog);
-      setBlog(blog);
+      let blog = await json(`/api/blogs/${props.match.params.id}`);
+      setBlog(blog[0]);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(blogTag);
-    fetch(`/api/blogs/${props.match.params.id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: blog.title,
-        content: blog.content,
-        author: blog.name,
-        tag: blogTag,
-      }),
-    });
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    let newBlog = {
+      title: blog.title,
+      content: blog.content,
+      authorid: User.userid,
+      tag: blogTag,
+    };
+    try {
+      let results = await json(
+        `/api/blogs/${props.match.params.id}`,
+        "PUT",
+        newBlog
+      );
+    } catch (e) {
+      throw e;
+    }
   };
 
   const handleDelete = () => {
-    fetch(`/api/blogs/${props.match.params.id}`, {
-      method: "DELETE",
-    });
+    json(`/api/blogs/${props.match.params.id}`, "DELETE");
   };
 
   useEffect(() => {
+    if (!User || User.userid === null) {
+      props.history.replace("/login");
+    }
     getBlog();
     getTags();
   }, []);
@@ -88,28 +88,6 @@ const Edit: React.FC<IEditProps> = (props) => {
           }
         />
       </div>
-      <div className="input-group mb-3">
-        <div className="input-group-prepend">
-          <span className="input-group-text" id="basic-addon1">
-            Author
-          </span>
-        </div>
-        <input
-          type="text"
-          className="form-control"
-          value={`${blog.name}`}
-          name="name"
-          aria-label="Author"
-          aria-describedby="basic-addon1"
-          onChange={(e) =>
-            setBlog({
-              ...blog,
-              [e.target.name]: e.target.value,
-            })
-          }
-        />
-      </div>
-
       <label htmlFor="tag-select">Choose a Tag:</label>
       <select
         onChange={(event) => setBlogTag(event.target.value)}
@@ -124,7 +102,6 @@ const Edit: React.FC<IEditProps> = (props) => {
           );
         })}
       </select>
-
       <div className="input-group">
         <div className="input-group-prepend"></div>
         <textarea

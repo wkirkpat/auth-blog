@@ -1,17 +1,17 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import {json, User} from "../../utils/api";
+import { RouteComponentProps } from "react-router";
 
-const AddBlog: React.FC<IAddBlogProps> = () => {
+const AddBlog: React.FC<IAddBlogProps> = (props) => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
-  const [blogAuthor, setBlogAuthor] = useState("");
   const [blogTag, setBlogTag] = useState("");
   const [tags, setTags] = useState([]);
 
   const getTags = async () => {
     try {
-      let r = await fetch("/api/tags");
-      let tags = await r.json();
+      let tags = await json("/api/tags");
       setTags(tags);
     } catch (e) {
       console.log(e);
@@ -19,22 +19,24 @@ const AddBlog: React.FC<IAddBlogProps> = () => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    fetch("api/blogs", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: blogTitle,
-        content: blogContent,
-        author: blogAuthor,
-        tag: blogTag,
-      }),
-    });
+    console.log(User.userid);
+    let blog = {
+      title: blogTitle,
+      content: blogContent,
+      authorid: User.userid,
+      tag: blogTag
+    };
+    try{
+    let result = json("api/blogs", "POST", blog);
+    } catch(e) {
+      throw e;
+    }
   };
 
   useEffect(() => {
+    if(!User || User.userid === null) {
+      props.history.replace("/login");
+    }
     getTags();
   }, []);
 
@@ -55,26 +57,11 @@ const AddBlog: React.FC<IAddBlogProps> = () => {
           onChange={(event) => setBlogTitle(event.target.value)}
         />
       </div>
-      <div className="input-group mb-3">
-        <div className="input-group-prepend">
-          <span className="input-group-text" id="basic-addon1">
-            Author
-          </span>
-        </div>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Author Name"
-          aria-label="Author"
-          aria-describedby="basic-addon1"
-          onChange={(event) => setBlogAuthor(event.target.value)}
-        />
-      </div>
-
-      <label htmlFor="tag-select">Choose a Tag:</label>
+      <label htmlFor="tag-select">Choose a Tag: </label>
       <select
         onChange={(event) => setBlogTag(event.target.value)}
         name="Tags"
+        className="ml-3"
         id="tag-select"
       >
         <option value="">Please Select a Tag</option>
@@ -86,7 +73,6 @@ const AddBlog: React.FC<IAddBlogProps> = () => {
           );
         })}
       </select>
-
       <div className="input-group">
         <div className="input-group-prepend"></div>
         <textarea
@@ -102,6 +88,6 @@ const AddBlog: React.FC<IAddBlogProps> = () => {
   );
 };
 
-interface IAddBlogProps {}
+interface IAddBlogProps extends RouteComponentProps {}
 
 export default AddBlog;

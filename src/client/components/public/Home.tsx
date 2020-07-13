@@ -1,15 +1,14 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {json} from "../../utils/api"
 
 const Home: React.FC<IHomeProps> = () => {
   const [blogs, setBlogs] = useState([]);
 
   const getBlogs = async () => {
     try {
-      let r = await fetch("/api/blogs");
-      let blogs = await r.json();
-      console.log(blogs);
+      let blogs = await json("/api/blogs");
       setBlogs(blogs);
     } catch (e) {
       console.log(e);

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { RouteComponentProps, Link } from "react-router-dom";
+import {json} from "../../utils/api"
 
 const Blog: React.FC<IBlogProps> = (props) => {
   const [blog, setBlog] = useState<Blog>({
@@ -14,10 +15,8 @@ const Blog: React.FC<IBlogProps> = (props) => {
 
   const getBlog = async () => {
     try {
-      let r = await fetch(`/api/blogs/${props.match.params.id}`);
-      let blog = await r.json();
-      console.log(blog);
-      setBlog(blog);
+      let blog = await json(`/api/blogs/${props.match.params.id}`);
+      setBlog(blog[0]);
     } catch (e) {
       console.log(e);
     }
@@ -25,9 +24,7 @@ const Blog: React.FC<IBlogProps> = (props) => {
 
   const getTags = async () => {
     try {
-      let r = await fetch(`/api/blogs/${props.match.params.id}/tags`);
-      let tags = await r.json();
-      console.log(tags);
+      let tags = await json(`/api/tags/${props.match.params.id}`);
       setTags(tags[0]);
     } catch (e) {
       console.log(e);
