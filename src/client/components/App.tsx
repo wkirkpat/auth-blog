@@ -6,12 +6,14 @@ import AddBlog from "./admin/AddBlog";
 import Edit from "./admin/Edit";
 import Login from "./admin/Login";
 import Donate from "./public/Donate";
+import Navbar from "./shared/Navbar";
 
 const App: React.FC<IAppProps> = (props) => {
   return (
     <>
       <Router>
-        <Link to="/">
+        <Navbar />
+        {/* <Link to="/">
           <button className="btn btn-primary btn-sm">Home</button>
         </Link>
         <Link to="/add">
@@ -22,7 +24,7 @@ const App: React.FC<IAppProps> = (props) => {
         </Link>
         <Link to="/donate">
           <button className="btn btn-success btn-sm">Donate</button>
-        </Link>
+        </Link> */}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/blog/:id" component={Blog} />

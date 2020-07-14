@@ -20,10 +20,12 @@ const Home: React.FC<IHomeProps> = () => {
   }, []);
 
   return (
-    <>
+    <main className="container d-flex">
+
       {blogs.map((blog) => {
         return (
-          <div key={blog.id} className="card ">
+          <div key={blog.id} className="card col-4 mr-5">
+             <img className="card-img-top border border-dark mt-2" src="https://run-the-jewels.s3-us-west-1.amazonaws.com/wallpaper/Zoom/RTJ4_ZoomBackground-0520.png" alt="Card image cap"></img>
             <div className="card-body">
               <h5 className="card-title">{blog.title}</h5>
               <h6 className="card-subtitle mb-2 text-muted">By: {blog.name}</h6>
@@ -34,7 +36,7 @@ const Home: React.FC<IHomeProps> = () => {
           </div>
         );
       })}
-    </>
+    </main>
   );
 };
 
