@@ -6,5 +6,6 @@ export default {
     password: process.env.DB_PASS,
     database: process.env.DB_SCHEMA
     },
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    stripeSK: process.env.STRIPE_SK
 }

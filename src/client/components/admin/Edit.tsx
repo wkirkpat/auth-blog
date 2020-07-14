@@ -48,6 +48,7 @@ const Edit: React.FC<IEditProps> = (props) => {
         "PUT",
         newBlog
       );
+      props.history.replace("/");
     } catch (e) {
       throw e;
     }

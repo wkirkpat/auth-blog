@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import {json, User} from "../../utils/api";
+import { json, User } from "../../utils/api";
 import { RouteComponentProps } from "react-router";
 
 const AddBlog: React.FC<IAddBlogProps> = (props) => {
@@ -24,17 +24,18 @@ const AddBlog: React.FC<IAddBlogProps> = (props) => {
       title: blogTitle,
       content: blogContent,
       authorid: User.userid,
-      tag: blogTag
+      tag: blogTag,
     };
-    try{
-    let result = json("api/blogs", "POST", blog);
-    } catch(e) {
+    try {
+      let result = json("api/blogs", "POST", blog);
+      props.history.replace("/");
+    } catch (e) {
       throw e;
     }
   };
 
   useEffect(() => {
-    if(!User || User.userid === null) {
+    if (!User || User.userid === null) {
       props.history.replace("/login");
     }
     getTags();
