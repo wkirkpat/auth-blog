@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ReactEventHandler } from "react";
 import { RouteComponentProps } from "react-router";
 import { json, setAccessToken, User } from "../../utils/api";
+import { Link } from "react-router-dom";
 
 const Login: React.FC<ILoginProps> = (props) => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const Login: React.FC<ILoginProps> = (props) => {
     } catch (e) {
       throw e;
     } finally {
-        props.history.replace("/add");
+        props.history.replace("/");
     }
   };
 
@@ -56,6 +57,7 @@ const Login: React.FC<ILoginProps> = (props) => {
       <button className="btn btn-primary" onClick={handleClick}>
         Submit
       </button>
+      <Link to="/register"><button type="button" className="btn btn-link ml-3">Create Account</button></Link>
     </div>
   );
 };
