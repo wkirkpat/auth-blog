@@ -11,6 +11,16 @@ Connection.connect((err) => {
   if (err) console.log(err);
 });
 
+//Helper function to make writing queries simpler
+export const Query = (query: string, values?: Array<string | number>) => {
+  return new Promise<Array<any>>((resolve, reject) => {
+    Connection.query(query, values, (err, results) => {
+      if (err) return reject(err);
+      return resolve(results);
+    });
+  });
+};
+
 export default {
   Blogs,
   Tags, 

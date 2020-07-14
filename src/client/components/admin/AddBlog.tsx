@@ -19,7 +19,6 @@ const AddBlog: React.FC<IAddBlogProps> = (props) => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(User.userid);
     let blog = {
       title: blogTitle,
       content: blogContent,
@@ -42,7 +41,8 @@ const AddBlog: React.FC<IAddBlogProps> = (props) => {
   }, []);
 
   return (
-    <div className="container p-4">
+    <div className="container p-4 border border-dk shadow-lg">
+      <h4>New Blog</h4>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text" id="basic-addon1">
@@ -78,11 +78,12 @@ const AddBlog: React.FC<IAddBlogProps> = (props) => {
         <div className="input-group-prepend"></div>
         <textarea
           className="form-control"
+          rows={8}
           onChange={(event) => setBlogContent(event.target.value)}
           aria-label="Blog Content"
         ></textarea>
       </div>
-      <button onClick={handleClick} className="btn btn-primary btn-sm">
+      <button onClick={handleClick} className="btn btn-primary btn-sm mt-3">
         Submit
       </button>
     </div>

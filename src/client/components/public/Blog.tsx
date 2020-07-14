@@ -37,7 +37,7 @@ const Blog: React.FC<IBlogProps> = (props) => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container border border-dark shadow-lg p-2 rounded">
       <h4>{blog.title}</h4>
       <h5>By: {blog.name}</h5>
       {tags.map((tag) => {
@@ -48,9 +48,9 @@ const Blog: React.FC<IBlogProps> = (props) => {
         );
       })}
       <div>
-        <p className="mt-5">{blog.content}</p>
+        <p className="mt-3 border-top border-bottom">{blog.content}</p>
         <Link to={`/blog/${props.match.params.id}/edit`}>
-          <button className="btn btn-primary btn-small">Edit</button>
+          <button className="btn btn-outline-primary my-2 my-sm-0">Edit</button>
         </Link>
       </div>
     </div>

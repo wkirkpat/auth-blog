@@ -67,64 +67,70 @@ const Edit: React.FC<IEditProps> = (props) => {
   }, []);
 
   return (
-    <div className="container p-4">
-      <div className="input-group mb-3">
-        <div className="input-group-prepend">
-          <span className="input-group-text" id="basic-addon1">
-            Title
-          </span>
+    
+      <div className="container p-4 border border-dark shadow-lg">
+      <h4>Edit Blog</h4>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="basic-addon1">
+              Title
+            </span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            value={`${blog.title}`}
+            name="title"
+            aria-label="Title"
+            aria-describedby="basic-addon1"
+            onChange={(e) =>
+              setBlog({
+                ...blog,
+                [e.target.name]: e.target.value,
+              })
+            }
+          />
         </div>
-        <input
-          type="text"
-          className="form-control"
-          value={`${blog.title}`}
-          name="title"
-          aria-label="Title"
-          aria-describedby="basic-addon1"
-          onChange={(e) =>
-            setBlog({
-              ...blog,
-              [e.target.name]: e.target.value,
-            })
-          }
-        />
+        <label htmlFor="tag-select">Choose a Tag:</label>
+        <select
+          className="ml-3"
+          onChange={(event) => setBlogTag(event.target.value)}
+          id="tag-select"
+        >
+          <option value="">Please Select a Tag</option>
+          {tags.map((tag) => {
+            return (
+              <option key={tag.id} value={tag.name}>
+                {tag.name}
+              </option>
+            );
+          })}
+        </select>
+        <div className="input-group">
+          <div className="input-group-prepend"></div>
+          <textarea
+            className="form-control mb-3"
+            rows={8}
+            value={`${blog.content}`}
+            name="content"
+            onChange={(e) =>
+              setBlog({
+                ...blog,
+                [e.target.name]: e.target.value,
+              })
+            }
+            aria-label="Blog Content"
+          ></textarea>
+        </div>
+        <div className=" d-flex justify-content-between">
+          <button onClick={handleDelete} className="btn btn-danger btn-sm">
+            Delete
+          </button>
+          <button onClick={handleClick} className="btn btn-primary btn-sm">
+            Submit
+          </button>
+        </div>
       </div>
-      <label htmlFor="tag-select">Choose a Tag:</label>
-      <select
-        onChange={(event) => setBlogTag(event.target.value)}
-        id="tag-select"
-      >
-        <option value="">Please Select a Tag</option>
-        {tags.map((tag) => {
-          return (
-            <option key={tag.id} value={tag.name}>
-              {tag.name}
-            </option>
-          );
-        })}
-      </select>
-      <div className="input-group">
-        <div className="input-group-prepend"></div>
-        <textarea
-          className="form-control"
-          value={`${blog.content}`}
-          name="content"
-          onChange={(e) =>
-            setBlog({
-              ...blog,
-              [e.target.name]: e.target.value,
-            })
-          }
-          aria-label="Blog Content"
-        ></textarea>
-      </div>
-      <button onClick={handleClick} className="btn btn-primary btn-sm">
-        Submit
-      </button>
-      <button onClick={handleDelete} className="btn btn-danger btn-sm">
-        Delete
-      </button>
-    </div>
   );
 };
 

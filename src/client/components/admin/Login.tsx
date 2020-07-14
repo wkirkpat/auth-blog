@@ -27,14 +27,15 @@ const Login: React.FC<ILoginProps> = (props) => {
   };
 
   useEffect(() =>{
-      if(User) {
-          props.history.replace("/add");
+      if(User.userid) {
+          props.history.replace("/");
       }
-  })
+  }, [])
 
   return (
-    <>
-      <div className="form-group">
+    <div className="container border border-dark shadow-lg p-2 rounded">
+      <h4>Login</h4>
+      <div className="form-group mt-3 border-top p-2">
         <label htmlFor="email">Email address</label>
         <input
           type="email"
@@ -43,7 +44,7 @@ const Login: React.FC<ILoginProps> = (props) => {
           onChange={(event) => setEmail(event.target.value)}
         />
       </div>
-      <div className="form-group">
+      <div className="form-group border-bottom p-2">
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -55,7 +56,7 @@ const Login: React.FC<ILoginProps> = (props) => {
       <button className="btn btn-primary" onClick={handleClick}>
         Submit
       </button>
-    </>
+    </div>
   );
 };
 
