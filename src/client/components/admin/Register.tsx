@@ -16,13 +16,16 @@ const Register: React.FC<IRegisterProps> = (props) => {
         email,
         password,
       });
-      if(result) {
-          setAccessToken(result.token, {userid: result.userid, role: result.role})
+      if (result) {
+        setAccessToken(result.token, {
+          userid: result.userid,
+          role: result.role,
+        });
       }
     } catch (e) {
       throw e;
     } finally {
-        props.history.replace("/");
+      props.history.replace("/");
     }
   };
 

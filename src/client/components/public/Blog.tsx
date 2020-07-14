@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { RouteComponentProps, Link } from "react-router-dom";
-import {json} from "../../utils/api"
+import { json } from "../../utils/api";
 
 const Blog: React.FC<IBlogProps> = (props) => {
   const [blog, setBlog] = useState<Blog>({

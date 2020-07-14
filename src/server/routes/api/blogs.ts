@@ -4,12 +4,12 @@ import DB from "../../db";
 const router = express.Router();
 
 const isAdmin: express.RequestHandler = (req: any, res, next) => {
-  if(!req.user) {
-      return res.sendStatus(401);
+  if (!req.user) {
+    return res.sendStatus(401);
   } else {
-      return next();
+    return next();
   }
-}
+};
 
 router.get("/", async (req, res, next) => {
   try {

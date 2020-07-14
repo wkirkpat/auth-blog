@@ -14,24 +14,26 @@ const Login: React.FC<ILoginProps> = (props) => {
         password: password,
       });
 
-      if(result) {
-        setAccessToken(result.token, {userid: result.userid, role: result.role});
+      if (result) {
+        setAccessToken(result.token, {
+          userid: result.userid,
+          role: result.role,
+        });
       } else {
         //check login status
       }
-
     } catch (e) {
       throw e;
     } finally {
-        props.history.replace("/");
+      props.history.replace("/");
     }
   };
 
-  useEffect(() =>{
-      if(User.userid) {
-          props.history.replace("/");
-      }
-  }, [])
+  useEffect(() => {
+    if (User.userid) {
+      props.history.replace("/");
+    }
+  }, []);
 
   return (
     <div className="container border border-dark shadow-lg p-2 rounded">
@@ -57,7 +59,11 @@ const Login: React.FC<ILoginProps> = (props) => {
       <button className="btn btn-primary" onClick={handleClick}>
         Submit
       </button>
-      <Link to="/register"><button type="button" className="btn btn-link ml-3">Create Account</button></Link>
+      <Link to="/register">
+        <button type="button" className="btn btn-link ml-3">
+          Create Account
+        </button>
+      </Link>
     </div>
   );
 };

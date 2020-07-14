@@ -23,7 +23,7 @@ export const Query = (query: string, values?: Array<string | number>) => {
 
 export default {
   Blogs,
-  Tags, 
+  Tags,
   AccessTokens,
-  Users
+  Users,
 };
