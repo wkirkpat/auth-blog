@@ -4,7 +4,7 @@ const Stripe = require("stripe");
 
 const router = express.Router();
 
-const stripe = new Stripe(config.stripeSK);
+const stripe = new Stripe(config.stripe.sk);
 
 const charge = (token: string, amt: number) => {
   return stripe.charges.create({

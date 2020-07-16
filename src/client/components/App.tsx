@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Link, Switch, Route, RouteComponentProps } from "react-router-dom";
 import Home from "./public/Home";
 import Blog from "./public/Blog";
 import AddBlog from "./admin/AddBlog";
@@ -9,11 +9,12 @@ import Donate from "./public/Donate";
 import Navbar from "./shared/Navbar";
 import Register from "./admin/Register";
 
-const App: React.FC<IAppProps> = (props) => {
+const App: React.FC<IAppProps> = () => {
+
   return (
     <>
       <Router>
-        <Navbar />
+          <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/blog/:id" component={Blog} />

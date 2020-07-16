@@ -2,9 +2,7 @@ import { Query } from "../index";
 
 //Gets all blogs for displaying on the front page. Also grabs the associated author name from the authors table
 export const getBlogs = async () =>
-  Query(
-    "SELECT authors.name, blogs.* FROM blogs JOIN authors ON blogs.authorid = authors.id"
-  );
+  Query("SELECT authors.name, blogs.* FROM blogs JOIN authors ON blogs.authorid = authors.id", []);
 
 //Gets one blog based on the id of the blog, like the above query it also gets the author name
 export const getBlog = async (id: string) =>
@@ -20,11 +18,11 @@ export const newBlog = async (
   content: string,
   authorid: string,
   tag: string
-) => Query("call spNewBlog(?,?,?,?)", [title, content, authorid, tag]);
+) => Query("CALL spNewBlog(?,?,?,?)", [title, content, authorid, tag]);
 
 //Deletes a blog based on given blog id
 export const deleteBlog = async (id: string) =>
-  Query("Delete from blogs where id = ?", [id]);
+  Query("DELETE FROM blogs WHERE id = ?", [id]);
 
 //Works almost exactly the same as the new blog query except it updates an existing record
 //So therefore it needs the id of the blog being edited
